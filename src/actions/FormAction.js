@@ -6,8 +6,8 @@ import {
     QUESTION_ADDING
 } from './types';
 
-import Firestack from 'react-native-firestack'
-const firebase = new Firestack();
+
+import firbase from 'firebase'
 import { Actions } from 'react-native-router-flux';
 
 
