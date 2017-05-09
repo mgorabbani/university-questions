@@ -19,7 +19,7 @@ class Home extends Component {
         if (this.props.loading) {
             return <Text style={{padding:10,height:282}}>Fetching Results...</Text>
         } else {
-            return <FlatList
+            return <FlatList style={{padding:10}}
                 horizontal
                 data={this.props.data}
                 keyExtractor={(item, index) => index}
@@ -30,7 +30,7 @@ class Home extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: "#FAFAFA" }}>
+            <View style={{ flex: 1, backgroundColor: "#FDF6E3" }}>
                 <Header />
                 <View>
                     <Text style={{ fontSize: 18, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#0002FF', padding: 10 }}>Latest Uploads</Text>

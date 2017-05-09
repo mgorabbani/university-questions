@@ -6,19 +6,20 @@ import {
     QUESTION_ADDING
 } from './types';
 
-import firebase from 'firebase';
+import Firestack from 'react-native-firestack'
+const firebase = new Firestack();
 import { Actions } from 'react-native-router-flux';
 
 
 export const addQuestion = (value) => {
     console.log(value)
-    const {code,exam,semester,year} = value
+    const {subjectCode,exam,semester,year} = value
     return(dispatch) => {
         dispatch({
             type:QUESTION_ADDING
         })
         firebase.database().ref(`/questions/`)
-            .push({ code,exam,semester,year })
+            .push({ subjectCode,exam,semester,year })
             .then(() => {
                 console.log("success")
                 dispatch({

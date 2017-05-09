@@ -16,7 +16,7 @@ export const searchQuestion = (keyword) => {
             type: FETCHING_SEARCH_RESULT,
         })
         var ref = firebase.database().ref("questions/");
-        ref.orderByChild("code").equalTo(keyword).once("value").then(function (snapshot) {
+        ref.orderByChild("subjectCode").equalTo(keyword).once("value").then(function (snapshot) {
             dispatch({
                 type: FETCH_SEARCH_RESULT,
                 payload: _.values(snapshot.val())

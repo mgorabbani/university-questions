@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableHighlight, ActivityIndicator ,ScrollView} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import { addQuestion } from '../../actions/FormAction'
@@ -11,7 +11,7 @@ var Form = t.form.Form;
 
 // here we are: define your domain model
 var Exam = t.enums({
-  Quiz: 'Quix',
+  Quiz: 'Quiz',
   Mid: 'Mid Term',
   Final: 'Final'
 });
@@ -22,7 +22,7 @@ var Semester = t.enums({
 })
 
 var Person = t.struct({
-  code: t.String,              // a required string
+  subjectCode: t.String,              // a required string
   exam: Exam,
   semester: Semester,
   year: t.Number,
@@ -42,7 +42,7 @@ class AddQuestion extends Component {
   render() {
     {if(this.props.error) alert(this.props.error)}
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Form
           ref="form"
           type={Person}
@@ -52,7 +52,7 @@ class AddQuestion extends Component {
         <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#0002FF'>
          {this.button()}
         </TouchableHighlight>
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -68,10 +68,36 @@ export default connect(mapStateToProps, {
   addQuestion
 })(AddQuestion)
 
+t.form.Form.stylesheet.textbox.normal.fontFamily= 'Ubuntu Mono derivative Powerline';
+t.form.Form.stylesheet.textbox.error.fontFamily= 'Ubuntu Mono derivative Powerline';
+
+t.form.Form.stylesheet.controlLabel.normal.fontFamily= 'Ubuntu Mono derivative Powerline';
+t.form.Form.stylesheet.controlLabel.error.fontFamily= 'Ubuntu Mono derivative Powerline';
+
+
+t.form.Form.stylesheet.textbox.normal.borderWidth = 0;
+t.form.Form.stylesheet.textbox.error.borderWidth = 0;
+t.form.Form.stylesheet.textbox.normal.marginBottom = 0;
+t.form.Form.stylesheet.textbox.error.marginBottom = 0;
+
+t.form.Form.stylesheet.controlLabel.normal.borderWidth = 0;
+t.form.Form.stylesheet.controlLabel.error.borderWidth = 0;
+t.form.Form.stylesheet.textbox.normal.marginBottom = 0;
+t.form.Form.stylesheet.textbox.error.marginBottom = 0;
+
+t.form.Form.stylesheet.textboxView.normal.borderWidth = 0;
+t.form.Form.stylesheet.textboxView.error.borderWidth = 0;
+t.form.Form.stylesheet.textboxView.normal.borderRadius = 0;
+t.form.Form.stylesheet.textboxView.error.borderRadius = 0;
+t.form.Form.stylesheet.textboxView.normal.borderBottomWidth = 1;
+t.form.Form.stylesheet.textboxView.error.borderBottomWidth = 1;
+t.form.Form.stylesheet.textbox.normal.marginBottom = 5;
+t.form.Form.stylesheet.textbox.error.marginBottom = 5;
+
 var styles = {
   container: {
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 65,
     padding: 20,
     backgroundColor: '#ffffff',
   },

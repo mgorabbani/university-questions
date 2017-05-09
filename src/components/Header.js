@@ -3,7 +3,8 @@ import {
     View,
     Text,
     TouchableWithoutFeedback,
-    StatusBar
+    StatusBar, 
+    Platform
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Entypo';
@@ -26,8 +27,8 @@ class Header extends Component {
     }
     render() {
         return (
-            <View style={{ marginTop: 63, backgroundColor: "#0012FF", padding:5}}>
-                <StatusBar barStyle='light-content' backgroundColor='#0012FF' />
+            <View style={{ marginTop: Platform == 'ios' ? 63 : 54, backgroundColor: "#0012FF", padding:5}}>
+                <StatusBar barStyle='light-content' backgroundColor='#0052FF' />
                 <SearchBar
                     inputStyle={{ backgroundColor: "#fff", borderWidth: 0, borderRadius: 2 }}
                     iconColor="#0012FF"
