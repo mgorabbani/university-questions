@@ -15,7 +15,7 @@ import firebase from 'firebase';
 
 
 import store from './store'
-import Home from './components/Home'
+import Scene from './components/Scene'
 
 
 export default class App extends Component {
@@ -34,7 +34,7 @@ export default class App extends Component {
         return (
             <Provider store={store}>
                 <View style={styles.container}>
-                    <Home/>
+                    <Scene/>
                 </View>
             </Provider>
         );

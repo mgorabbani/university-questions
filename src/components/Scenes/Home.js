@@ -5,8 +5,8 @@ import {
     Image,
     ScrollView
 } from 'react-native';
-import Header from './Header'
-import Questoion from './Question'
+import Header from '../Header'
+import Questoion from '../Question'
 
 class Home extends Component {
 
