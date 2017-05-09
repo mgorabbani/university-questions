@@ -21,12 +21,12 @@ import Scene from './components/Scene'
 export default class App extends Component {
     componentWillMount() {
         const config = {
-            apiKey: "AIzaSyAodm2Mq42LuYCA-W_6vNJxmAkaaWtJNj8",
-            authDomain: "chatapp-7f66c.firebaseapp.com",
-            databaseURL: "https://chatapp-7f66c.firebaseio.com",
-            projectId: "chatapp-7f66c",
-            storageBucket: "chatapp-7f66c.appspot.com",
-            messagingSenderId: "565127427721"
+            apiKey: "AIzaSyDGi_zZIX7naqsyvGFcKt4uYtTb6N6boEs",
+            authDomain: "diuquestions.firebaseapp.com",
+            databaseURL: "https://diuquestions.firebaseio.com",
+            projectId: "diuquestions",
+            storageBucket: "diuquestions.appspot.com",
+            messagingSenderId: "319202974092"
         };
         firebase.initializeApp(config);
     }
@@ -34,7 +34,7 @@ export default class App extends Component {
         return (
             <Provider store={store}>
                 <View style={styles.container}>
-                    <Scene/>
+                    <Scene />
                 </View>
             </Provider>
         );

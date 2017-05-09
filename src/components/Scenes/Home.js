@@ -18,8 +18,7 @@ class Home extends Component {
                     <Text style={{ fontSize: 18, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#0002FF', padding: 10 }}>Latest Uploads</Text>
                     <ScrollView horizontal>
 
-                        <Questoion />
-                        <Questoion />
+                     
                     </ScrollView>
                 </View>
 
@@ -30,4 +29,4 @@ class Home extends Component {
 }
 
 
-export default Home;
+export default Home

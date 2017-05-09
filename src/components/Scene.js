@@ -13,8 +13,8 @@ export default class App extends Component {
     return (
       <Router>
         <Scene key="root">
-          <Scene key="home" component={Home} title="Home" initial={true} hideNavBar={true} />
-          <Scene key="search" component={Search} title="Search" hideNavBar={false} backTitle="<"/>
+          <Scene key="home" component={Home} title="Home" hideNavBar={true} initial={true}/>
+          <Scene key="search" component={Search} title="Search" hideNavBar={false} backTitle="<"  />
           <Scene key="single" component={Single} title="Single" hideNavBar={false}  />
           <Scene key="addQuestion" component={AddQuestion} title="Add Question" hideNavBar={false} />
         </Scene>

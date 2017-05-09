@@ -9,14 +9,17 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchBar from 'react-native-material-design-searchbar';
 import { Actions } from 'react-native-router-flux';
+import { searchQuestion } from '../actions/SearchAction'
+import { connect } from 'react-redux';
+
 class Header extends Component {
     state = {
         search: ''
     }
     _onBlur(){
-        if(this.state.search.length>5) {
+        if(this.state.search.length>0) {
             console.log('On search')
-            Actions.search({keyword:this.state.search})
+            this.props.searchQuestion(this.state.search)
         } else {
         console.log('On Blur',this.state)
         }
@@ -51,4 +54,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default connect(null,{searchQuestion})(Header);

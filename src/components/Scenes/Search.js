@@ -1,14 +1,40 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Question from '../Question'
 
-export default class PageOne extends Component {
 
+import { connect } from 'react-redux';
+
+ class Search extends Component {
+
+  renderData(){
+    console.log(this.props.data)
+    if(this.props.loading) {
+     return  <Text>Fetching Results...</Text>
+    } else {
+     return <FlatList
+          data={this.props.data}
+          keyExtractor={(item, index) => item.id}
+          renderItem={({ item }) => <Question item={item}/>}
+          numColumns={2}
+        />
+    }
+  }
   render() {
+    console.log(this.props)
     return (
-      <View style={{margin: 128}}>
-        <Text onPress={Actions.pageTwo}>This is {this.props.keyword}!</Text>
+      <View style={{ marginTop: 65 }}>
+        {this.renderData()}
       </View>
     )
   }
 }
+
+const mapStateToProps = state => {
+  
+    const {loading,error,data} = state.search
+    return {loading,error,data}
+    
+}
+export default connect(mapStateToProps)(Search)
