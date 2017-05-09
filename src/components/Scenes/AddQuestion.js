@@ -42,13 +42,14 @@ class AddQuestion extends Component {
   render() {
     {if(this.props.error) alert(this.props.error)}
     return (
-      <View style={{ marginTop: 100 }}>
+      <View style={styles.container}>
         <Form
           ref="form"
           type={Person}
           options={options}
+          
         />
-        <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
+        <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#0002FF'>
          {this.button()}
         </TouchableHighlight>
       </View>
@@ -86,10 +87,8 @@ var styles = {
   },
   button: {
     height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
+    backgroundColor: '#0002FF',
+    borderRadius: 3,
     marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
