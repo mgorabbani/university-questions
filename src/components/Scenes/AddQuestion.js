@@ -29,7 +29,15 @@ var Person = t.struct({
 });
 var options = {};
 class AddQuestion extends Component {
-
+ constructor(){
+   super()
+   this.state = {
+   img_loading:false
+ }
+ }
+ componentWillMount() {
+   this.setState({img_loading:this.props.img_loading})
+ }
   onPress() {
     let url = this.props.source
     // call getValue() to get the values of the form
@@ -42,10 +50,15 @@ class AddQuestion extends Component {
     return this.props.loading ? <ActivityIndicator size="large" /> : <Text style={styles.buttonText}>Save</Text>
   }
   imageLoading() {
-    if (this.props.img_loading===true) {
+    console.log("State",this.state)
+    
+    if (this.state.img_loading) {
+      console.log("activity",this.state.img_loading)
       return <ActivityIndicator size="large" />
+
     } else {
-      <Image
+       console.log("image",this.state.img_loading)
+     return <Image
         source={{ uri: this.props.image_data }}
         style={styles.image}
       />

@@ -15,7 +15,7 @@ INITIAL_STATE = {
     img_fail: '',
     source: '',
     image_data: '',
-    img_loading:''
+    img_loading:false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,11 +27,11 @@ export default (state = INITIAL_STATE, action) => {
         case ADD_QUESTION_SUCCESS:
             return { ...INITIAL_STATE, loading: false }
         case IMAGE_SUCCESS:
-            return { ...state, source: action.payload.source, image_data: action.payload.image_data }
+            return { ...state, source: action.payload.source, image_data: action.payload.image_data,img_loading:false }
         case IMAGE_ERROR:
             return { ...state, img_fail: "Can't upload the image. Check your connection" }
         case IMAGE_LOADING:
-            return {...state, img_loading:true}
+            return {...INITIAL_STATE,...state, img_loading:true}
         default:
             return state
     }
