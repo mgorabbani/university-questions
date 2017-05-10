@@ -7,7 +7,8 @@ import {
 
     IMAGE_CANCEL,
     IMAGE_ERROR,
-    IMAGE_SUCCESS
+    IMAGE_SUCCESS,
+    IMAGE_LOADING
 } from './types';
 
 import {Platform} from 'react-native'
@@ -75,6 +76,9 @@ var options = {
 export const selectImage = () => {
     return (dispatch) => {
         ImagePicker.launchImageLibrary(options, (response) => {
+            dispatch({
+                    type: IMAGE_LOADING
+                })
             if (response.didCancel) {
                 console.log('User cancelled image picker');
 

@@ -3,7 +3,8 @@ import {
     View,
     Text,
     Image,
-    FlatList
+    FlatList,
+    ScrollView
 } from 'react-native';
 import Header from '../Header'
 import Questoion from '../Question'
@@ -31,7 +32,7 @@ class Home extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: "#232129" }}>
+            <ScrollView style={{ flex: 1, backgroundColor: "#232129" }}>
                 <Header />
                 <View>
                     <Text style={{ fontSize: 18, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#fff', padding: 10 }}>Latest Uploads</Text>
@@ -39,7 +40,7 @@ class Home extends Component {
                     <Text style={{ fontSize: 18, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#fff', padding: 10, paddingHorizontal: 20 }}>Please Uploads Your Question To Help Other Students</Text>
                 </View>
 
-            </View>
+            </ScrollView>
 
         )
     }

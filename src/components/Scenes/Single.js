@@ -1,24 +1,36 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image, Button,ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+import PhotoView from 'react-native-photo-view';
+import Dimensions from 'Dimensions'
 
+let window = Dimensions.get('window')
 export default class PageOne extends Component {
   constructor() {
     super()
-    this.getImage = this.getImage.bind(this)
     this.state = {
-      image_uri: 'https://avatars0.githubusercontent.com/u/12028011?v=3&s=200'
+      height:Dimensions.get('window').height,
+      width:Dimensions.get('window').width
     }
   }
-
   render() {
+console.log(this.state)
     return (
-      <View style={{ margin: 128 }}>
-        <Text onPress={Actions.pageTwo}>This is PageOne!</Text>
-        <Image source={{ uri: this.state.image_uri }} style={{ width: 100, height: 100 }} />
-        
-      </View >
+
+        <PhotoView
+          source={{ uri: this.props.url }}
+          minimumZoomScale={1}
+          maximumZoomScale={6}
+          androidScaleType="center"
+          onLoad={() => console.log("Image loaded!")}
+          style={{flex:1,height:null,width:null}} 
+          resizeMode="cover"
+          onLoadStart={()=> <ActivityIndicator size="large" style={{alignItems:'center',justifyContent:'center'}}/>}
+          />
+
+
     )
   }
 }
+

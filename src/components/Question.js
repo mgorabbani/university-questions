@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 export default Question = (props) => {
-    const { exam, semester, year, subjectCode } = props.item
+    const { exam, semester, year, subjectCode, url } = props.item
     return (
-        <TouchableWithoutFeedback onPress={() => Actions.single()}>
+        <TouchableWithoutFeedback onPress={() => Actions.single({ url })}>
             <View style={styles.box}>
                 <View style={{ padding: 10, alignItems: 'flex-start' }} >
                     <Text style={{ fontFamily: 'Ubuntu Mono derivative Powerline' }}>Subject Code: {subjectCode}</Text>
@@ -20,7 +20,7 @@ export default Question = (props) => {
                 <View style={{ padding: 10 }} >
                     <Image
                         style={{ width: 145, height: 150 }}
-                        source={{ uri: 'https://placeholdit.imgix.net/~text?txtsize=24&txt=256×256&w=256&h=350' }}
+                        source={{ uri: url }}
                     />
                 </View>
             </View>

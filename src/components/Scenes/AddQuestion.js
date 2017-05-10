@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, ActivityIndicator, ScrollView,Image } from 'react-native';
+import { View, Text, TouchableHighlight, ActivityIndicator, ScrollView, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import { addQuestion, selectImage } from '../../actions/FormAction'
@@ -29,21 +29,30 @@ var Person = t.struct({
 });
 var options = {};
 class AddQuestion extends Component {
-  
+
   onPress() {
-     let url =this.props.source
+    let url = this.props.source
     // call getValue() to get the values of the form
     var value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
-      this.props.addQuestion({value,url})
+      this.props.addQuestion({ value, url })
     }
   }
   button() {
     return this.props.loading ? <ActivityIndicator size="large" /> : <Text style={styles.buttonText}>Save</Text>
   }
+  imageLoading() {
+    if (this.props.img_loading===true) {
+      return <ActivityIndicator size="large" />
+    } else {
+      <Image
+        source={{ uri: this.props.image_data }}
+        style={styles.image}
+      />
+    }
+  }
   render() {
-    { if (this.props.error) alert(this.props.error) }
-      
+
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -65,12 +74,10 @@ class AddQuestion extends Component {
               <View style={{ flexDirection: 'row', }} >
                 <Icon name="folder-upload" size={24} color="#232129" />
                 {/*<Text style={{ marginLeft: 10, marginTop: 5, fontSize: 13, fontFamily: 'Ubuntu Mono derivative Powerline' }} >{this.props.source}</Text>*/}
-                <Image
-                      source={{ uri: this.props.image_data }}
-                      style={ styles.image }
-                    />
+                {this.imageLoading()}
+
               </View>
-              
+
             </TouchableHighlight>
 
           </View>
@@ -86,8 +93,8 @@ class AddQuestion extends Component {
 
 const mapStateToProps = state => {
 
-  const { loading, error, img_fail, source, image_data } = state.form
-  return { loading, error, img_fail, source, image_data }
+  const { loading, error, img_fail, source, image_data, img_loading } = state.form
+  return { loading, error, img_fail, source, image_data, img_loading }
 
 }
 export default connect(mapStateToProps, {
@@ -149,9 +156,9 @@ var styles = {
     paddingHorizontal: 10,
     marginTop: -3
   },
-  image:{
-    height:100,
-    width:100,
-    marginHorizontal:10
+  image: {
+    height: 100,
+    width: 100,
+    marginHorizontal: 10
   }
 }

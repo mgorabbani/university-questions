@@ -5,7 +5,8 @@ import {
 
     IMAGE_CANCEL,
     IMAGE_ERROR,
-    IMAGE_SUCCESS
+    IMAGE_SUCCESS,
+    IMAGE_LOADING
 } from '../actions/types';
 
 INITIAL_STATE = {
@@ -14,7 +15,7 @@ INITIAL_STATE = {
     img_fail: '',
     source: '',
     image_data: '',
-    value: [],
+    img_loading:''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,6 +30,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, source: action.payload.source, image_data: action.payload.image_data }
         case IMAGE_ERROR:
             return { ...state, img_fail: "Can't upload the image. Check your connection" }
+        case IMAGE_LOADING:
+            return {...state, img_loading:true}
         default:
             return state
     }
