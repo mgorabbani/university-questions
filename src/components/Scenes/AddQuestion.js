@@ -42,7 +42,10 @@ class AddQuestion extends Component {
   render() {
     {if(this.props.error) alert(this.props.error)}
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView>
+        <View  style={styles.container}>
+          
+        
         <Form
           ref="form"
           type={Person}
@@ -52,6 +55,7 @@ class AddQuestion extends Component {
         <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#0002FF'>
          {this.button()}
         </TouchableHighlight>
+        </View>
       </ScrollView>
     )
   }

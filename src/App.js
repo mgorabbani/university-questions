@@ -13,22 +13,22 @@ import {
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
 
-
+const config = {
+    apiKey: "AIzaSyDGi_zZIX7naqsyvGFcKt4uYtTb6N6boEs",
+    authDomain: "diuquestions.firebaseapp.com",
+    databaseURL: "https://diuquestions.firebaseio.com",
+    projectId: "diuquestions",
+    storageBucket: "diuquestions.appspot.com",
+    messagingSenderId: "319202974092"
+};
+firebase.initializeApp(config);
 import store from './store'
 import Scene from './components/Scene'
 
 
 export default class App extends Component {
     componentWillMount() {
-        const config = {
-            apiKey: "AIzaSyDGi_zZIX7naqsyvGFcKt4uYtTb6N6boEs",
-            authDomain: "diuquestions.firebaseapp.com",
-            databaseURL: "https://diuquestions.firebaseio.com",
-            projectId: "diuquestions",
-            storageBucket: "diuquestions.appspot.com",
-            messagingSenderId: "319202974092"
-        };
-        firebase.initializeApp(config);
+
     }
     render() {
         return (

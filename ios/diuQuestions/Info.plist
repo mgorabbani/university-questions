@@ -66,5 +66,7 @@
 		<string>Ubuntu Mono derivative Powerline Bold.ttf</string>
 		<string>Ubuntu Mono derivative Powerline.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<key>NSCameraUsageDescription</key>
 </dict>
 </plist>

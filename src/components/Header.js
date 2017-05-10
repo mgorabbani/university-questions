@@ -27,11 +27,11 @@ class Header extends Component {
     }
     render() {
         return (
-            <View style={{ marginTop: Platform == 'ios' ? 63 : 54, backgroundColor: "#0012FF", padding:5}}>
-                <StatusBar barStyle='light-content' backgroundColor='#0052FF' />
+            <View style={{ marginTop: Platform == 'ios' ? 63 : 54, backgroundColor: "#000", padding:5}}>
+                <StatusBar barStyle='light-content' backgroundColor='#333' />
                 <SearchBar
                     inputStyle={{ backgroundColor: "#fff", borderWidth: 0, borderRadius: 2 }}
-                    iconColor="#0012FF"
+                    iconColor="#111111"
                     onSearchChange={(value) => this.setState({ search: value })}
                     height={40}
                     onFocus={() => console.log('On Focus')}
