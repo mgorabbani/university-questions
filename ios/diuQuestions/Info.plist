@@ -67,6 +67,6 @@
 		<string>Ubuntu Mono derivative Powerline.ttf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<key>NSCameraUsageDescription</key>
+	<string>NSCameraUsageDescription</string>
 </dict>
 </plist>

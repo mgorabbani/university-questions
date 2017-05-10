@@ -8,7 +8,7 @@ import {
 import Header from '../Header'
 import Questoion from '../Question'
 import { connect } from 'react-redux';
-
+import Shimmer from '../Shimmer';
 import { fetchRecentUploads } from '../../actions/HomeAction'
 class Home extends Component {
     componentWillMount() {
@@ -17,9 +17,10 @@ class Home extends Component {
     renderData() {
         console.log(this.props.data)
         if (this.props.loading) {
-            return <Text style={{padding:10,height:282}}>Fetching Results...</Text>
+           return  <Shimmer/>
+            
         } else {
-            return <FlatList style={{padding:10}}
+            return <FlatList style={{ padding: 10 }}
                 horizontal
                 data={this.props.data}
                 keyExtractor={(item, index) => index}
@@ -35,7 +36,7 @@ class Home extends Component {
                 <View>
                     <Text style={{ fontSize: 18, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#fff', padding: 10 }}>Latest Uploads</Text>
                     {this.renderData()}
-                      <Text style={{ fontSize: 18, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#fff', padding: 10,paddingHorizontal:20 }}>Please Uploads Your Question To Help Other Students</Text>
+                    <Text style={{ fontSize: 18, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#fff', padding: 10, paddingHorizontal: 20 }}>Please Uploads Your Question To Help Other Students</Text>
                 </View>
 
             </View>

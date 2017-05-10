@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, ActivityIndicator ,ScrollView} from 'react-native';
+import { View, Text, TouchableHighlight, ActivityIndicator, ScrollView,Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import { addQuestion } from '../../actions/FormAction'
+import { addQuestion, selectImage } from '../../actions/FormAction'
 import { connect } from 'react-redux';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 var t = require('tcomb-form-native');
 var Form = t.form.Form;
@@ -29,32 +29,54 @@ var Person = t.struct({
 });
 var options = {};
 class AddQuestion extends Component {
+  
   onPress() {
+     let url =this.props.source
     // call getValue() to get the values of the form
     var value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
-      this.props.addQuestion(value)
+      this.props.addQuestion({value,url})
     }
   }
-  button(){
-    return this.props.loading? <ActivityIndicator size="large" /> : <Text style={styles.buttonText}>Save</Text>
+  button() {
+    return this.props.loading ? <ActivityIndicator size="large" /> : <Text style={styles.buttonText}>Save</Text>
   }
   render() {
-    {if(this.props.error) alert(this.props.error)}
+    { if (this.props.error) alert(this.props.error) }
+      
     return (
       <ScrollView>
-        <View  style={styles.container}>
-          
-        
-        <Form
-          ref="form"
-          type={Person}
-          options={options}
-          
-        />
-        <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#0002FF'>
-         {this.button()}
-        </TouchableHighlight>
+        <View style={styles.container}>
+
+
+          <Form
+            ref="form"
+            type={Person}
+            options={options}
+
+          />
+
+          <View style={{ flexDirection: 'row', paddingVertical: 10 }} >
+            <Text style={{ fontSize: 17, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#232129', }}>Upload Question</Text>
+            <TouchableHighlight
+              style={styles.upload}
+              onPress={() => this.props.selectImage()}
+              underlayColor='#fff'>
+              <View style={{ flexDirection: 'row', }} >
+                <Icon name="folder-upload" size={24} color="#232129" />
+                {/*<Text style={{ marginLeft: 10, marginTop: 5, fontSize: 13, fontFamily: 'Ubuntu Mono derivative Powerline' }} >{this.props.source}</Text>*/}
+                <Image
+                      source={{ uri: this.props.image_data }}
+                      style={ styles.image }
+                    />
+              </View>
+              
+            </TouchableHighlight>
+
+          </View>
+          <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#0002FF'>
+            {this.button()}
+          </TouchableHighlight>
         </View>
       </ScrollView>
     )
@@ -64,19 +86,19 @@ class AddQuestion extends Component {
 
 const mapStateToProps = state => {
 
-    const {loading,error} = state.form
-    return {loading,error}
-    
+  const { loading, error, img_fail, source, image_data } = state.form
+  return { loading, error, img_fail, source, image_data }
+
 }
 export default connect(mapStateToProps, {
-  addQuestion
+  addQuestion, selectImage
 })(AddQuestion)
 
-t.form.Form.stylesheet.textbox.normal.fontFamily= 'Ubuntu Mono derivative Powerline';
-t.form.Form.stylesheet.textbox.error.fontFamily= 'Ubuntu Mono derivative Powerline';
+t.form.Form.stylesheet.textbox.normal.fontFamily = 'Ubuntu Mono derivative Powerline';
+t.form.Form.stylesheet.textbox.error.fontFamily = 'Ubuntu Mono derivative Powerline';
 
-t.form.Form.stylesheet.controlLabel.normal.fontFamily= 'Ubuntu Mono derivative Powerline';
-t.form.Form.stylesheet.controlLabel.error.fontFamily= 'Ubuntu Mono derivative Powerline';
+t.form.Form.stylesheet.controlLabel.normal.fontFamily = 'Ubuntu Mono derivative Powerline';
+t.form.Form.stylesheet.controlLabel.error.fontFamily = 'Ubuntu Mono derivative Powerline';
 
 
 t.form.Form.stylesheet.textbox.normal.borderWidth = 0;
@@ -117,10 +139,19 @@ var styles = {
   },
   button: {
     height: 36,
-    backgroundColor: '#0002FF',
+    backgroundColor: '#232129',
     borderRadius: 3,
     marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
+  },
+  upload: {
+    paddingHorizontal: 10,
+    marginTop: -3
+  },
+  image:{
+    height:100,
+    width:100,
+    marginHorizontal:10
   }
 }
