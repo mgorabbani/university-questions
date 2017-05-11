@@ -32,8 +32,9 @@ class Home extends Component {
     }
     render() {
         return (
-            <ScrollView style={{ flex: 1, backgroundColor: "#232129" }}>
-                <Header />
+           <View  style={{ flex: 1, backgroundColor: "#232129" }}>
+ <Header />
+                 <ScrollView >
                 <View>
                     <Text style={{ fontSize: 18, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#fff', padding: 10 }}>Latest Uploads</Text>
                     {this.renderData()}
@@ -41,6 +42,8 @@ class Home extends Component {
                 </View>
 
             </ScrollView>
+           </View>
+               
 
         )
     }

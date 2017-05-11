@@ -3,6 +3,8 @@ import {
     ADD_QUESTION_FAILED,
     QUESTION_ADDING,
 
+    FORM_UPDATE,
+
     IMAGE_CANCEL,
     IMAGE_ERROR,
     IMAGE_SUCCESS,
@@ -15,23 +17,28 @@ INITIAL_STATE = {
     img_fail: '',
     source: '',
     image_data: '',
-    img_loading:false
+    img_loading: false,
+    value: {
+        subjectCode: 'swe221',
+        year: 2016
+    }
 }
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
+
         case QUESTION_ADDING:
-            return {...state,loading:true,value:action.payload}
+            return [ ...state, {loading: true, value: action.payload} ]
         case ADD_QUESTION_FAILED:
             return { ...INITIAL_STATE, loading: false, error: "something went wrong please try again" }
         case ADD_QUESTION_SUCCESS:
             return { ...INITIAL_STATE, loading: false }
         case IMAGE_SUCCESS:
-            return { ...state, source: action.payload.source, image_data: action.payload.image_data,img_loading:false }
+            return { ...state, source: action.payload.source, image_data: action.payload.image_data, img_loading: false }
         case IMAGE_ERROR:
             return { ...state, img_fail: "Can't upload the image. Check your connection" }
         case IMAGE_LOADING:
-            return {...INITIAL_STATE,...state, img_loading:true}
+            return { ...INITIAL_STATE, ...state, img_loading: true }
         default:
             return state
     }

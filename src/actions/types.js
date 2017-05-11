@@ -15,3 +15,5 @@ export const IMAGE_SUCCESS = "image_success"
 export const IMAGE_ERROR= "image_error"
 export const IMAGE_CANCEL="image_cancel"
 export const IMAGE_LOADING="image_loading"
+
+export const FORM_UPDATE="form_update"

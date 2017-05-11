@@ -7,7 +7,8 @@ import {
 INITIAL_STATE = {
     loading: false,
     data: [],
-    error:''
+    error:'',
+    keyword:'fuck'
 }
 
 export default (state = INITIAL_STATE, action) => {

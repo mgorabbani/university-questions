@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, ActivityIndicator, ScrollView, Image } from 'react-native';
+import { View, Text, TouchableHighlight, ActivityIndicator, ScrollView, Image, DeviceEventEmitter } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import { addQuestion, selectImage } from '../../actions/FormAction'
+import { addQuestion, selectImage, updateForm } from '../../actions/FormAction'
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -29,15 +29,18 @@ var Person = t.struct({
 });
 var options = {};
 class AddQuestion extends Component {
- constructor(){
-   super()
-   this.state = {
-   img_loading:false
- }
- }
- componentWillMount() {
-   this.setState({img_loading:this.props.img_loading})
- }
+  constructor(props) {
+    super(props)
+    Actions.refresh()
+    this.state = {
+     value: {
+        subjectCode: 'swe221',
+        year: 2016
+    },
+    img_loading:false
+    }
+  }
+
   onPress() {
     let url = this.props.source
     // call getValue() to get the values of the form
@@ -50,22 +53,21 @@ class AddQuestion extends Component {
     return this.props.loading ? <ActivityIndicator size="large" /> : <Text style={styles.buttonText}>Save</Text>
   }
   imageLoading() {
-    console.log("State",this.state)
-    
-    if (this.state.img_loading) {
-      console.log("activity",this.state.img_loading)
+    console.log("State", this.props)
+
+    if (this.props.img_loading) {
       return <ActivityIndicator size="large" />
 
     } else {
-       console.log("image",this.state.img_loading)
-     return <Image
+
+      return <Image
         source={{ uri: this.props.image_data }}
         style={styles.image}
       />
     }
   }
   render() {
-
+    console.log("fucking props",this.props)
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -75,7 +77,8 @@ class AddQuestion extends Component {
             ref="form"
             type={Person}
             options={options}
-
+            onChange={(value)=>this.setState({value})}
+            value={this.state.value}
           />
 
           <View style={{ flexDirection: 'row', paddingVertical: 10 }} >
@@ -105,14 +108,12 @@ class AddQuestion extends Component {
 
 
 const mapStateToProps = state => {
-
-  const { loading, error, img_fail, source, image_data, img_loading } = state.form
-  return { loading, error, img_fail, source, image_data, img_loading }
-
+  
+  const { loading, error, img_fail, source, image_data, img_loading, value } = state.form
+  return { loading, error, img_fail, source, image_data, img_loading, value }
 }
-export default connect(mapStateToProps, {
-  addQuestion, selectImage
-})(AddQuestion)
+
+export default connect(mapStateToProps, { addQuestion, selectImage, updateForm })(AddQuestion)
 
 t.form.Form.stylesheet.textbox.normal.fontFamily = 'Ubuntu Mono derivative Powerline';
 t.form.Form.stylesheet.textbox.error.fontFamily = 'Ubuntu Mono derivative Powerline';

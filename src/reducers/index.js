@@ -5,6 +5,6 @@ import SearchReducer from './SearchReducer'
 import HomeReducer from './HomeReducer'
 export default combineReducers({
     form: FormReducer,
-    search:SearchReducer,
-    home:HomeReducer
+    search: SearchReducer,
+    home: HomeReducer
 })

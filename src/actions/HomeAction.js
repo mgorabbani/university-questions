@@ -16,11 +16,11 @@ export const fetchRecentUploads = (keyword) => {
             type: FETCHING_RECENT_UPLOADS,
         })
         var ref = firebase.database().ref("questions/");
-       ref.limitToFirst(3).once('value').then(function (snapshot) {  
+       ref.limitToLast(3).once('value').then(function (snapshot) {  
            console.log(snapshot)
             dispatch({
                 type: FETCH_RECENT_UPLOADS,
-                payload: _.values(snapshot.val())
+                payload: _.reverse(_.values(snapshot.val()))
             })
         }).catch(() => {
             dispatch({

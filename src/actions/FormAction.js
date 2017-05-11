@@ -5,13 +5,15 @@ import {
     QUESTION_FETCH_SUCCESS,
     QUESTION_ADDING,
 
+    FORM_UPDATE,
+
     IMAGE_CANCEL,
     IMAGE_ERROR,
     IMAGE_SUCCESS,
     IMAGE_LOADING
 } from './types';
 
-import {Platform} from 'react-native'
+import { Platform,Alert } from 'react-native'
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-picker'
@@ -22,6 +24,14 @@ const fs = RNFetchBlob.fs
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
 window.Blob = Blob
 
+export const updateForm = (value) => {
+    return {
+        type: FORM_UPDATE,
+        payload: FORM_UPDATE
+    }
+}
+
+
 export const addQuestion = (data) => {
     const { subjectCode, exam, semester, year } = data.value
     return (dispatch) => {
@@ -31,13 +41,15 @@ export const addQuestion = (data) => {
 
         uploadImage(data.url).then(url => {
             firebase.database().ref(`/questions/`)
-                .push({ subjectCode, exam, semester, year,url })
+                .push({ subjectCode, exam, semester, year, url })
                 .then(() => {
-                    console.log("success")
                     dispatch({
                         type: ADD_QUESTION
                     })
-                    Actions.home({ type: 'reset' })
+                   Alert.alert("Success","Question added successfully!", [
+                        { text: 'Back To Home', onPress: () => Actions.home({ type: 'reset' }) },
+                    ], )
+
                 }).catch((e) => {
                     console.log(e)
                     dispatch({
@@ -51,20 +63,6 @@ export const addQuestion = (data) => {
 
 }
 
-export const searchQuestion = () => {
-    const { currentUser } = firebase.auth()
-    return (dispatch) => {
-        firebase.database().ref(`/users/${currentUser.uid}/employees`)
-            .on('value', snapshot => {
-                dispatch({
-                    type: QUESTION_FETCH_SUCCESS,
-                    payload: snapshot.val()
-                })
-            })
-    }
-}
-
-
 var options = {
     title: 'Select Question',
     storageOptions: {
@@ -77,8 +75,8 @@ export const selectImage = () => {
     return (dispatch) => {
         ImagePicker.launchImageLibrary(options, (response) => {
             dispatch({
-                    type: IMAGE_LOADING
-                })
+                type: IMAGE_LOADING
+            })
             if (response.didCancel) {
                 console.log('User cancelled image picker');
 

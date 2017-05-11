@@ -32,7 +32,7 @@ import { connect } from 'react-redux';
 }
 
 const mapStateToProps = state => {
-  
+  console.log("serch "+state)
     const {loading,error,data} = state.search
     return {loading,error,data}
     
