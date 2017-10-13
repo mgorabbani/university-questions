@@ -9,9 +9,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Entypo';
 import SearchBar from 'react-native-material-design-searchbar';
-import { Actions } from 'react-native-router-flux';
-import { searchQuestion } from '../actions/SearchAction'
-import { connect } from 'react-redux';
+
 
 class Header extends Component {
     state = {
@@ -20,15 +18,15 @@ class Header extends Component {
     _onBlur() {
         if (this.state.search.length > 0) {
             console.log('On search')
-            this.props.searchQuestion(this.state.search)
+            this.props.navigation.navigate('Search');
         } else {
             console.log('On Blur', this.state)
         }
     }
     render() {
         return (
-            <View style={{ marginTop: Platform == 'ios' ? 63 : 54, backgroundColor: "#000", padding:5}}>
-                <StatusBar barStyle='light-content' backgroundColor='#333' />
+            <View style={{ backgroundColor: "#3FB14F", padding:5}}>
+
                 <SearchBar
                     inputStyle={{ backgroundColor: "#fff", borderWidth: 0, borderRadius: 2 }}
                     iconColor="#111111"
@@ -47,4 +45,4 @@ class Header extends Component {
     }
 }
 
-export default connect(null, { searchQuestion })(Header);
+export default Header

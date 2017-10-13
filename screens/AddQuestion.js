@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, ActivityIndicator, ScrollView, Image, DeviceEventEmitter } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { View, Text, TouchableHighlight, ActivityIndicator, ScrollView, Image, DeviceEventEmitter, Platform } from 'react-native';
 
-import { addQuestion, selectImage, updateForm } from '../../actions/FormAction'
-import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Icon from 'react-native-vector-icons/Entypo';
 var t = require('tcomb-form-native');
 var Form = t.form.Form;
-
+import * as firebase from 'firebase';
 // here we are: define your domain model
 var Exam = t.enums({
   Quiz: 'Quiz',
@@ -31,22 +28,28 @@ var options = {};
 class AddQuestion extends Component {
   constructor(props) {
     super(props)
-    Actions.refresh()
     this.state = {
-     value: {
+      value: {
         subjectCode: 'swe221',
-        year: 2016
-    },
-    img_loading:false
+        year: 2016,
+        exam: 'Mid',
+        semester: 'Summer',
+      },
+      image: null,
+      uploading: false,
     }
   }
 
   onPress() {
-    let url = this.props.source
+    let url
     // call getValue() to get the values of the form
-    var value = this.refs.form.getValue();
-    if (value) { // if validation fails, value will be null
-      this.props.addQuestion({ value, url })
+    var value = this.refs.form.getValue()
+
+    if (value && url) { // if validation fails, value will be null
+      const { subjectCode, exam, semester, year } = value
+      console.log(subjectCode, exam, semester, year, url);
+    } else {
+      console.log('please upload the quesiton!')
     }
   }
   button() {
@@ -61,13 +64,64 @@ class AddQuestion extends Component {
     } else {
 
       return <Image
-        source={{ uri: this.props.image_data }}
+        source={{ uri: this.props.image }}
         style={styles.image}
       />
     }
   }
+  _maybeRenderUploadingOverlay = () => {
+    if (this.state.uploading) {
+      return (
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              backgroundColor: 'rgba(0,0,0,0.4)',
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+          ]}>
+          <ActivityIndicator color="#fff" animating size="large" />
+        </View>
+      );
+    }
+  };
+  // _pickImage = async () => {
+  //   let pickerResult = await ImagePicker.launchImageLibraryAsync({
+  //     allowsEditing: true,
+  //     base64: true,
+  //   });
+
+  //   this._handleImagePicked(pickerResult);
+  // };
+  _handleImagePicked = async pickerResult => {
+    let uploadResponse, uploadResult;
+
+    try {
+      var metadata = {
+        contentType: 'image/png',
+      };
+      //Concat the image type to the base64 data
+      let message = 'data:image/jpeg;base64, ' + pickerResult.base64;
+      const sessionId = new Date().getTime()
+      //Uploads the base64 to firebase as a raw string, with the specified metadata
+firebase.storage().ref('images').child(`${sessionId}`).putString(message, "raw", metadata).then((uploadResult) => {
+  console.log(uploadResult)
+  this.setState({ image: uploadResult.location });
+}).catch((err) => console.log(err));
+     
+    } catch (e) {
+      console.log({ uploadResponse });
+      console.log({ uploadResult });
+      console.log({ e });
+      alert('Upload failed, sorry :(');
+    } finally {
+      this.setState({ uploading: false });
+    }
+  };
+
+
   render() {
-    console.log("fucking props",this.props)
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -77,19 +131,19 @@ class AddQuestion extends Component {
             ref="form"
             type={Person}
             options={options}
-            onChange={(value)=>this.setState({value})}
+            onChange={(value) => this.setState({ value })}
             value={this.state.value}
           />
 
           <View style={{ flexDirection: 'row', paddingVertical: 10 }} >
-            <Text style={{ fontSize: 17, fontFamily: 'Ubuntu Mono derivative Powerline', fontWeight: "bold", color: '#232129', }}>Upload Question</Text>
+            <Text style={{ fontSize: 17, fontWeight: "bold", color: '#232129', }}>Upload Question</Text>
             <TouchableHighlight
               style={styles.upload}
-              onPress={() => this.props.selectImage()}
+              onPress={() => this._pickImage()}
               underlayColor='#fff'>
               <View style={{ flexDirection: 'row', }} >
                 <Icon name="folder-upload" size={24} color="#232129" />
-                {/*<Text style={{ marginLeft: 10, marginTop: 5, fontSize: 13, fontFamily: 'Ubuntu Mono derivative Powerline' }} >{this.props.source}</Text>*/}
+                {/*<Text style={{ marginLeft: 10, marginTop: 5, fontSize: 13 }} >{this.props.source}</Text>*/}
                 {this.imageLoading()}
 
               </View>
@@ -107,19 +161,14 @@ class AddQuestion extends Component {
 }
 
 
-const mapStateToProps = state => {
-  
-  const { loading, error, img_fail, source, image_data, img_loading, value } = state.form
-  return { loading, error, img_fail, source, image_data, img_loading, value }
-}
 
-export default connect(mapStateToProps, { addQuestion, selectImage, updateForm })(AddQuestion)
+export default AddQuestion;
 
-t.form.Form.stylesheet.textbox.normal.fontFamily = 'Ubuntu Mono derivative Powerline';
-t.form.Form.stylesheet.textbox.error.fontFamily = 'Ubuntu Mono derivative Powerline';
+// t.form.Form.stylesheet.textbox.normal.fontFamily = 'space-mono';
+// t.form.Form.stylesheet.textbox.error.fontFamily = 'space-mono';
 
-t.form.Form.stylesheet.controlLabel.normal.fontFamily = 'Ubuntu Mono derivative Powerline';
-t.form.Form.stylesheet.controlLabel.error.fontFamily = 'Ubuntu Mono derivative Powerline';
+// t.form.Form.stylesheet.controlLabel.normal.fontFamily = 'space-mono';
+// t.form.Form.stylesheet.controlLabel.error.fontFamily = 'space-mono';
 
 
 t.form.Form.stylesheet.textbox.normal.borderWidth = 0;
@@ -144,7 +193,7 @@ t.form.Form.stylesheet.textbox.error.marginBottom = 5;
 var styles = {
   container: {
     justifyContent: 'center',
-    marginTop: 65,
+
     padding: 20,
     backgroundColor: '#ffffff',
   },

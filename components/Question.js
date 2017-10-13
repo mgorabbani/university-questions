@@ -5,17 +5,17 @@ import {
     Image,
     TouchableWithoutFeedback
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+
 export default Question = (props) => {
     const { exam, semester, year, subjectCode, url } = props.item
     return (
-        <TouchableWithoutFeedback onPress={() => Actions.single({ url })}>
+        <TouchableWithoutFeedback onPress={() => console.log('will open image view')}>
             <View style={styles.box}>
                 <View style={{ padding: 10, alignItems: 'flex-start' }} >
-                    <Text style={{ fontFamily: 'Ubuntu Mono derivative Powerline' }}>Subject Code: {subjectCode}</Text>
-                    <Text style={{ fontFamily: 'Ubuntu Mono derivative Powerline' }}>Exam Type: {exam}</Text>
-                    <Text style={{ fontFamily: 'Ubuntu Mono derivative Powerline' }}>Semester: {semester}</Text>
-                    <Text style={{ fontFamily: 'Ubuntu Mono derivative Powerline' }}>Year: {year}</Text>
+                    <Text style={{  }}>Subject Code: {subjectCode}</Text>
+                    <Text style={{  }}>Exam Type: {exam}</Text>
+                    <Text style={{  }}>Semester: {semester}</Text>
+                    <Text style={{  }}>Year: {year}</Text>
                 </View>
                 <View style={{ padding: 10 }} >
                     <Image
